@@ -20,18 +20,39 @@ public class Main {
 		int y;
 		int amount;
 		
-		public Dust(int x, int y, int amount) {
+		Dust(int x, int y, int amount) {
 			this.x = x;
 			this.y = y;
 			this.amount = amount;
 		}
 	}
 	
-	static boolean isValid(int x, int y) {
+	public static boolean isValid(int x, int y) {
 		if (0 <= x && x < R && 0 <= y && y < C) {
 			return true;
 		}
 		return false;
+	}
+	
+	public static void spread(Queue<Dust> q) {
+		while(!q.isEmpty()) {
+			Dust now = q.poll();
+			int diffVol = now.amount / 5;
+			
+			for(int i = 0; i < 4; i++) {
+				int nx = now.x + clockwise[i][0];
+				int ny = now.y + clockwise[i][1];
+				
+				if (isValid(nx, ny)) {
+					// 공기청정기 위치를 만나면 확산X
+					if(ny == 0 && (cleaner[0] == nx || cleaner[1] == nx)) {
+						continue;
+					}
+					graph[nx][ny] += diffVol;
+					graph[now.x][now.y] -= diffVol;
+				}
+			}
+		}
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -64,26 +85,7 @@ public class Main {
 		
 		for(int t = 0; t < T; t++) {
 			// 확산
-			while(!q.isEmpty()) {
-				Dust now = q.poll();
-				int diffVol = now.amount / 5;
-				int hitCnt = 0;
-				
-				for(int i = 0; i < 4; i++) {
-					int nx = now.x + clockwise[i][0];
-					int ny = now.y + clockwise[i][1];
-					
-					if (isValid(nx, ny)) {
-						// 공기청정기 위치를 만나면 확산X
-						if(ny == 0 && (cleaner[0] == nx || cleaner[1] == nx)) {
-							continue;
-						}
-						graph[nx][ny] += diffVol;
-						graph[now.x][now.y] -= diffVol;
-						hitCnt++;
-					}
-				}
-			}
+			spread(q);
 			
 			// 공기청정기 작동
 			// 위쪽
