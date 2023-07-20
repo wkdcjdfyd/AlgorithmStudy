@@ -10,20 +10,20 @@ public class Main {
 	static int[][] clockwise = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 	static int[][] graph;
 	static int[] cleaner = new int[2];
-	static int munjiCnt = 0;
+	static int dustCnt = 0;
 	static int R;
 	static int C;
 	static int T;
 	
-	static class munji {
+	static class Dust {
 		int x;
 		int y;
-		int munji;
+		int amount;
 		
-		public munji(int x, int y, int munji) {
+		public Dust(int x, int y, int amount) {
 			this.x = x;
 			this.y = y;
-			this.munji = munji;
+			this.amount = amount;
 		}
 	}
 	
@@ -42,7 +42,7 @@ public class Main {
 		C = Integer.parseInt(st.nextToken());
 		T = Integer.parseInt(st.nextToken());
 		
-		Queue<munji> q = new LinkedList<munji>();
+		Queue<Dust> q = new LinkedList<Dust>();
 		int idx = 0;
 		graph = new int[R][C];
 				
@@ -52,8 +52,8 @@ public class Main {
 				graph[i][j] = Integer.parseInt(st.nextToken());
 				
 				if(graph[i][j] > 0) {
-					q.add(new munji(i, j, graph[i][j]));
-					munjiCnt += graph[i][j];
+					q.add(new Dust(i, j, graph[i][j]));
+					dustCnt += graph[i][j];
 				}
 				
 				if(j == 0 && graph[i][j] == -1) {
@@ -65,8 +65,8 @@ public class Main {
 		for(int t = 0; t < T; t++) {
 			// 확산
 			while(!q.isEmpty()) {
-				munji now = q.poll();
-				int diffVol = now.munji / 5;
+				Dust now = q.poll();
+				int diffVol = now.amount / 5;
 				int hitCnt = 0;
 				
 				for(int i = 0; i < 4; i++) {
@@ -90,7 +90,7 @@ public class Main {
 			int x = cleaner[0] - 1;
 			int y = 0;
 			int d = 0;
-			munjiCnt -= graph[x][y];
+			dustCnt -= graph[x][y];
 			
 			while(!(x == cleaner[0] && y == 0)) {
 				int nx = x + counterClockwise[d][0];
@@ -121,7 +121,7 @@ public class Main {
 			x = cleaner[1] + 1;
 			y = 0;
 			d = 0;
-			munjiCnt -= graph[x][y];
+			dustCnt -= graph[x][y];
 			
 			while(!(x == cleaner[1] && y == 0)) {
 				int nx = x + clockwise[d][0];
@@ -152,11 +152,11 @@ public class Main {
 			for(int i = 0; i < R; i++) {
 				for(int j = 0; j < C; j++) {
 					if(graph[i][j] > 0) {
-						q.add(new munji(i, j, graph[i][j]));
+						q.add(new Dust(i, j, graph[i][j]));
 					}
 				}
 			}
 		}
-		System.out.println(munjiCnt);
+		System.out.println(dustCnt);
 	}
 }
