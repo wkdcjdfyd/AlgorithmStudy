@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 133388 KB, 시간: 348 ms
+메모리: 134244 KB, 시간: 352 ms
 
 ### 분류
 
@@ -45,17 +45,17 @@
 
 <p style="text-align: center;">왼쪽과 위쪽에 칸이 없기 때문에, 두 방향으로만 확산이 일어났다.</p>
 
-<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/cebebfa9-0056-45f1-b705-75b035888085/-/preview/" style="width: 268px; height: 100px;"></p>
+<p style="text-align: center;"><img alt="" src="" style="width: 268px; height: 100px;"></p>
 
 <p style="text-align: center;">인접한 네 방향으로 모두 확산이 일어난다.</p>
 
-<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/1ed0d2e9-9767-4b94-bbde-0e1d6a2d52ff/-/preview/" style="width: 268px; height: 100px;"></p>
+<p style="text-align: center;"><img alt="" src="" style="width: 268px; height: 100px;"></p>
 
 <p style="text-align: center;">공기청정기가 있는 칸으로는 확산이 일어나지 않는다.</p>
 
 <p>공기청정기의 바람은 다음과 같은 방향으로 순환한다.</p>
 
-<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/94466937-96c7-4f25-9804-530ebd554a59/-/preview/" style="width: 332px; height: 300px;"></p>
+<p style="text-align: center;"><img alt="" src="" style="width: 332px; height: 300px;"></p>
 
 <p>방의 정보가 주어졌을 때, T초가 지난 후 구사과의 방에 남아있는 미세먼지의 양을 구해보자.</p>
 
