@@ -11,27 +11,33 @@ public class Main {
 	static int M;
 	static int N;
 	static int day;
-	static int ripenCnt = 0;
-	static int emptyCnt = 0;
+	static int unRipenCnt = 0;
 	static int[][] graph;
-	static Queue<int[]> q = new LinkedList<>();
+	static Queue<Pair> q = new LinkedList<>();
+	
+	static class Pair {
+		int x, y;
+		public Pair(int a, int b) {
+			x = a;
+			y = b;
+		}
+	}
 	
 	public static void ripening() {
 		while(!q.isEmpty()) {
-			int[] now = q.poll();
+			Pair now = q.poll();
 			
 			for(int i = 0; i < 4; i++) {
-				int nx = now[0] + dx[i];
-				int ny = now[1] + dy[i];
+				int nx = now.x + dx[i];
+				int ny = now.y + dy[i];
 				
-				if(0 <= nx && nx < N && 0 <= ny && ny < M) {
-					if(graph[nx][ny] == 0) {
-						graph[nx][ny] = graph[now[0]][now[1]] + 1;
-						day = graph[nx][ny];
-						ripenCnt++;
-						q.add(new int[] {nx, ny});
-					}
+				if(nx < 0 || nx >= N || ny < 0 || ny >= M || graph[nx][ny] != 0) {
+					continue;
 				}
+				graph[nx][ny] = graph[now.x][now.y] + 1;
+				day = graph[nx][ny];
+				unRipenCnt--;
+				q.add(new Pair(nx, ny));
 			}
 		}
 	}
@@ -48,20 +54,17 @@ public class Main {
 			st = new StringTokenizer(br.readLine());
 			for(int j = 0; j < M; j++) {
 				graph[i][j] = Integer.parseInt(st.nextToken());
-				if(graph[i][j] == 1) {
-					ripenCnt++;
-					q.add(new int[] {i, j});
-				}
-				else if(graph[i][j] == -1) emptyCnt++;
+				if(graph[i][j] == 1) q.add(new Pair(i, j));
+				if(graph[i][j] == 0) unRipenCnt++;
 			}
 		}
 		
-		if(N * M - emptyCnt == ripenCnt) {
+		if(unRipenCnt == 0) {
 			System.out.println(0);
 		}
 		else {
 			ripening();
-			if(N * M - emptyCnt != ripenCnt) {
+			if(unRipenCnt != 0) {
 				System.out.println(-1);
 			}
 			else {
