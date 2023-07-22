@@ -68,6 +68,7 @@ public class Main {
 				System.out.println(day-1);
 			}
 		}
+		br.close();
 	}
 
 }
