@@ -1,7 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -10,11 +11,11 @@ public class Main {
 	static int N;
 	static int M;
 	static int[][] graph;
-	static ArrayList<int[]> rainCloud = new ArrayList<>();
+	static int[][] visited;
+	static Queue<int[]> q = new LinkedList<>();
 	
 	public static void moveRainCloud(int d, int s) {
-		for(int i = 0; i < rainCloud.size(); i++) {
-			int[] now = rainCloud.get(i);
+		for(int[] now: q) {
 			now[0] = convLoc(now[0] + dx[d] * s);
 			now[1] = convLoc(now[1] + dy[d] * s);
 			graph[now[0]][now[1]]++;
@@ -22,8 +23,9 @@ public class Main {
 	}
 	
 	public static void copyWaterBug() {
-		for(int i = 0; i < rainCloud.size(); i++) {
-			int[] now = rainCloud.get(i);
+		while(!q.isEmpty()) {
+			int[] now = q.poll();
+			visited[now[0]][now[1]] = 1;
 			int cnt = 0;
 			
 			for(int k = 2; k < 9; k = k + 2) {
@@ -36,13 +38,6 @@ public class Main {
 			}
 			graph[now[0]][now[1]] += cnt;
 		}
-	}
-	
-	public static boolean isValid(int x, int y) {
-		if(x < 1 || x > N || y < 1 || y > N) {
-			return false;
-		}
-		return true;
 	}
 	
 	public static int convLoc(int x) {
@@ -62,14 +57,11 @@ public class Main {
 		return nx;
 	}
 	
-	public static boolean isIn(ArrayList<int[]> prevCloud, int x, int y) {
-		for(int i = 0; i < prevCloud.size(); i++) {
-			int[] now = prevCloud.get(i);
-			if(now[0] == x && now[1] == y) {
-				return true;
-			}
+	public static boolean isValid(int x, int y) {
+		if(x < 1 || x > N || y < 1 || y > N) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -86,27 +78,25 @@ public class Main {
 			}
 		}
 		
-		rainCloud.add(new int[] {N, 1});
-		rainCloud.add(new int[] {N, 2});
-		rainCloud.add(new int[] {N-1, 1});
-		rainCloud.add(new int[] {N-1, 2});
+		q.add(new int[] {N, 1});
+		q.add(new int[] {N, 2});
+		q.add(new int[] {N-1, 1});
+		q.add(new int[] {N-1, 2});
 		
 		for(int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
 			int d = Integer.parseInt(st.nextToken());
 			int s = Integer.parseInt(st.nextToken());
-			
+			visited = new int[N+1][N+1];
 			
 			moveRainCloud(d, s);
 			copyWaterBug();
-			ArrayList<int[]> prevCloud = rainCloud;
-			rainCloud = new ArrayList<>();
 			
 			for(int x = 1; x <= N; x++) {
 				for(int y = 1; y <= N; y++) {
-					if(graph[x][y] >= 2 && !isIn(prevCloud, x, y)) {
+					if(graph[x][y] >= 2 && visited[x][y] != 1) {
 						graph[x][y] -= 2;
-						rainCloud.add(new int[] {x, y});
+						q.add(new int[] {x, y});
 					}
 				}
 			}
