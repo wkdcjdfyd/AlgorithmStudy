@@ -8,21 +8,13 @@ public class Solution {
 	static int N;
 	static int X;
 	static int M;
-	static int L;
-	static int R;
-	static int S;
 	static int[][] records;
-	static int[] nums;
 	static int[] result;
 	static boolean flag;
 	static int max;
 	
-	public static void makePerm(int nth, int[] choosed) {
+	public static void makePerm(int nth, int[] choosed, int[] subSum) {
 		if(nth == N) {
-			int[] subSum = new int[N+1];
-			for(int i = 1; i < N+1; i++) {
-				subSum[i] = subSum[i-1] + choosed[i-1];
-			}
 			for(int m = 0; m < M; m++) {
 				if(subSum[records[m][1]] - subSum[records[m][0]-1] != records[m][2]) {
 					return;
@@ -41,9 +33,10 @@ public class Solution {
 			}
 			return;
 		}
-		for(int i = 0; i < nums.length; i++) {
-			choosed[nth] = nums[i];
-			makePerm(nth+1, choosed);
+		for(int i = 0; i <= X; i++) {
+			choosed[nth] = i;
+			subSum[nth+1] = subSum[nth] + i;
+			makePerm(nth+1, choosed, subSum);
 		}
 	}
 
@@ -60,11 +53,6 @@ public class Solution {
 			M = Integer.parseInt(st.nextToken());
 			records = new int[M][3];
 			
-			nums = new int[X+1];
-			for(int i = 0; i < X+1; i++) {
-				nums[i] = i;
-			}
-			
 			for(int m = 0; m < M; m++) {
 				st = new StringTokenizer(br.readLine());
 				records[m][0] = Integer.parseInt(st.nextToken());
@@ -74,7 +62,7 @@ public class Solution {
 			max = -100;
 			flag = false;
 			result = new int[N];
-			makePerm(0, new int[N]);
+			makePerm(0, new int[N], new int[N+1]);
 			
 			if(flag) {
 				for(int num : result) {
