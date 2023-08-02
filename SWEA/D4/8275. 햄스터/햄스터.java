@@ -3,6 +3,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+/**
+@author 		Ryong
+@since 			2023. 8. 2.
+@see			https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWxQ310aOlQDFAWL
+@performance
+@category 		#
+@note			중복순열을 활용한 완전탐색으로 문제 해결
+*/
+
 public class Solution {
 	static StringBuilder sb = new StringBuilder();
 	static int N;
