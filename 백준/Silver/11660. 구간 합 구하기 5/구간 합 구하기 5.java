@@ -4,6 +4,16 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+/**
+@author 			Ryong
+@since 				2023. 8. 2.
+@see				https://www.acmicpc.net/problem/11660
+@performance			141316KB 772ms
+@category 			#누적합 #DP
+@note
+*/
+
+
 public class Main {
 
 	public static void main(String[] args) throws IOException {
