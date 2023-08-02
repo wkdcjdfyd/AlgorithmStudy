@@ -6,9 +6,9 @@ import java.io.InputStreamReader;
 @author 		Ryong
 @since 			2023. 8. 2.
 @see			https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV5PobmqAPoDFAUq
-@performance
-@category #
-@note
+@performance		16888kb 104 ms
+@category 		#구현 #시뮬레이션
+@note			달팽이 구현
 */
 
 public class Solution {
