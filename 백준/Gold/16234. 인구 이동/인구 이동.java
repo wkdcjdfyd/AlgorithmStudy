@@ -22,6 +22,7 @@ public class Main {
 		int popul;
 		int countryCnt;
 		int avg;
+		ArrayList<int[]> loc = new ArrayList<>();
 		
 		public void setAvg() {
 			this.avg = this.popul / this.countryCnt;
@@ -37,6 +38,7 @@ public class Main {
 		u.countryCnt++;
 		u.startX = a;
 		u.startY = b;
+		u.loc.add(new int[] {a, b});
 		
 		while(!q.isEmpty()) {
 			int[] now = q.poll();
@@ -58,6 +60,7 @@ public class Main {
 					visited[nx][ny] = unionCnt;
 					u.popul += graph[nx][ny];
 					u.countryCnt++;
+					u.loc.add(new int[] {nx, ny});
 					q.add(new int[] {nx, ny});
 				}
 			}
@@ -65,38 +68,14 @@ public class Main {
 	}
 	
 	public static void movePopul() {
-		Queue<int[]> q;
-		boolean[][] v;
 		for(int i = 0; i < unions.size(); i++) {
 			Union now = unions.get(i);
 			now.setAvg();
-			v = new boolean[N][N];
 			
-			q = new LinkedList<>();
-			q.add(new int[] {now.startX, now.startY});
-			v[now.startX][now.startY] = true;
-			graph[now.startX][now.startY] = now.avg;
-			
-			while(!q.isEmpty()) {
-				int[] country = q.poll();
-				
-				for(int j = 0; j < dx.length; j++) {
-					int nx = country[0] + dx[j];
-					int ny = country[1] + dy[j];
-					
-					// 좌표를 벗어나면
-					if(nx < 0 || ny < 0 || nx >= N || ny >= N) {
-						continue;
-					}
-					// 같은 연합이면
-					if(visited[nx][ny] == i+1 && !v[nx][ny]) {
-						graph[nx][ny] = now.avg;
-						v[nx][ny] = true;
-						q.add(new int[] {nx, ny});
-					}
-				}
+			for(int j = 0; j < now.countryCnt; j++) {
+				int[] cor = now.loc.get(j);
+				graph[cor[0]][cor[1]] = now.avg;
 			}
-			
 		}
 	}
 
