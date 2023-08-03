@@ -9,10 +9,11 @@ import java.util.StringTokenizer;
 @author 		Ryong
 @since 			2023. 8. 3.
 @see			https://www.acmicpc.net/problem/14502
-@performance
-@category #
-@note
+@performance		116796kb 320ms
+@category 		#구현 #그래프이론 #브루트포스
+@note			새로 만드는 벽의 개수가 3개 밖에 안돼서 for문을 사용해 3중 for문으로 구현하면 더 간단하다. 하지만 조합 연습을 하고 싶었다!
 */
+
 
 public class Main {
 	static int N;
