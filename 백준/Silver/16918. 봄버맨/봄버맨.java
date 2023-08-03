@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -12,11 +11,11 @@ public class Main {
 	static int[] dx = {-1, 1, 0, 0};
 	static int[] dy = {0, 0, -1, 1};
 	
-	public static void makeResult() {
+	public static void makeResult(int clock) {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < R; i++) {
 			for(int j = 0; j < C; j++) {
-				if(graph[i][j] == -1) {
+				if(graph[i][j] == -1 || graph[i][j] == clock - 3) {
 					sb.append(".");
 				}
 				else {
@@ -48,7 +47,7 @@ public class Main {
 			}
 		}
 		if(N == 1) {
-			makeResult();
+			makeResult(0);
 			br.close();
 			return;
 		}
@@ -59,7 +58,7 @@ public class Main {
 				clock++;
 				for(int i = 0; i < R; i++) {
 					for(int j = 0; j < C; j++) {
-						if(graph[i][j] == -1) {
+						if(graph[i][j] == -1 || graph[i][j] == clock-4) {
 							graph[i][j] = clock;
 						}
 					}
@@ -67,11 +66,9 @@ public class Main {
 			}
 			else {
 				clock++;
-				ArrayList<int[]> lastClear = new ArrayList<>();
 				for(int i = 0; i < R; i++) {
 					for(int j = 0; j < C; j++) {
 						if(graph[i][j] == clock-3) {
-							lastClear.add(new int[] {i, j});
 							for(int d = 0; d < dx.length; d++) {
 								int nx = i + dx[d];
 								int ny = j + dy[d];
@@ -79,19 +76,19 @@ public class Main {
 								if(nx < 0 || ny < 0 || nx >= R || ny >= C) {
 									continue;
 								}
-								if(graph[nx][ny] != -1) {
-									lastClear.add(new int[] {nx, ny});
+								if(graph[nx][ny] == clock-3) {
+									continue;
+								}
+								if(graph[nx][ny] != -1 && graph[nx][ny] > clock -3) {
+									graph[nx][ny] = -1;
 								}
 							}
 						}
 					}
 				}
-				for(int[] now : lastClear) {
-					graph[now[0]][now[1]] = -1;
-				}
 			}
 		}
-		makeResult();
+		makeResult(clock);
 		br.close();
 	}
 
