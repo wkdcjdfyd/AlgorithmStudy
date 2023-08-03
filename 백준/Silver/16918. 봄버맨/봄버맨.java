@@ -3,6 +3,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+/**
+ * @author 			Ryong
+ * @since 			2023. 8. 3.
+ * @see  			https://www.acmicpc.net/problem/16918
+ * @performance 		15280kb	248ms
+ * @category 			#구현 #시물레이션
+ * @note 			ArrayList로 동시 삭제 요소 저장시 너무 많은 메모리를 소모함! 다른 조건으로 비교해줄 수 있으면 절약 가능!
+ */
+
 public class Main {
 	static int R;
 	static int C;
