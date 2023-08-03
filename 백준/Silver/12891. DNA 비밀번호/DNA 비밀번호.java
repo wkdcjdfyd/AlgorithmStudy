@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 @see			https://www.acmicpc.net/problem/12891
 @performance		24384kb	224ms
 @category 		#슬라이딩윈도우
-@note
+@note			윈도우 안에 카운팅을 계속 해서 새로 하게되면 시간초과가 발생한다. 한칸씩 움직이기 때문에 조정되는 칸에 대해서만 값을 변경하면 된다.
 */
 
 public class Main {
