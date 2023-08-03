@@ -8,8 +8,8 @@ import java.util.StringTokenizer;
 @author 		Ryong
 @since 			2023. 8. 3.
 @see			https://www.acmicpc.net/problem/12891
-@performance
-@category #
+@performance		24384kb	224ms
+@category 		#슬라이딩윈도우
 @note
 */
 
