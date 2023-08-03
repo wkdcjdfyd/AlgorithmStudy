@@ -7,8 +7,8 @@ import java.util.StringTokenizer;
 @author 		Ryong
 @since 			2023. 8. 3.
 @see			https://www.acmicpc.net/problem/15652
-@performance
-@category 		#
+@performance		21060kb	120ms
+@category 		#백트래킹
 @note			중복조합으로 시도해봤다.
 */
 
