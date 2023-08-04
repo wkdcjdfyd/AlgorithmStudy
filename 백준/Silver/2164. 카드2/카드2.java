@@ -8,8 +8,8 @@ import java.util.LinkedList;
 @author 		Ryong
 @since 			2023. 8. 4.
 @see			https://www.acmicpc.net/problem/2164
-@performance
-@category 		#
+@performance		51184kb	152ms
+@category 		#큐
 @note
 */
 
