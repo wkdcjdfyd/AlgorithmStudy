@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 @author 			Ryong
 @since 				2023. 8. 4.
 @see				https://www.acmicpc.net/problem/2023
-@performance		
+@performance			12208kb	88ms
 @category 			#소수판정
 @note
 1. 메모리
