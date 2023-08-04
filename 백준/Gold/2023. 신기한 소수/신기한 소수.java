@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 @author 			Ryong
 @since 				2023. 8. 4.
 @see				https://www.acmicpc.net/problem/2023
-@performance			12208kb	88ms
+@performance		12208kb	88ms
 @category 			#소수판정
 @note
 1. 메모리
@@ -42,43 +42,22 @@ X가 계속 바뀌지만 고려하지 않는다면 (10^8 - 10^7) * 8 * root(X) �
 */
 
 public class Main {
-	static boolean[] isPrime = new boolean[10];
-	
-	public static void initIsPrime() {
-		// '에라토스테네스의 체' 방법으로 한자리 소수 구하기
-		for(int i = 2; i < isPrime.length; i++) {
-			isPrime[i] = true;
-		}
-		
-		for(int i = 2; i < isPrime.length; i++) {
-			if(isPrime[i]) {
-				for(int j = i*2; j < isPrime.length; j += i) {
-					isPrime[j] = false;
-				}
-			}
-		}
-	}
-	
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
 		int n = Integer.parseInt(br.readLine());
 		
-		// 한자리 수 소수 판별 배열 초기화
-		initIsPrime();
-		
 		MainLoop:
 		for(int num = (int) Math.pow(10, n-1); num < (int) Math.pow(10, n); num++) {
 			for(int scale = (int) Math.pow(10, n-1); scale > 0; scale /= 10) {
 				int now = num / scale;
-				
-				// 한자리 수라면 isPrime을 통해 확인
-				if(now < 10 && !isPrime[now]) {
+				if(now == 1) {
 					num += scale;
 					num--;
 					continue MainLoop;
 				}
+
 				// 2부터 루트 now까지 나머지 없이 나눠지는지 확인
 				for(int div = 2; div <= (int)Math.sqrt(now); div++) {
 					if(now % div == 0) {
