@@ -5,6 +5,15 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
+/**
+@author 		Ryong
+@since 			2023. 8. 4.
+@see			https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV14uWl6AF0CFAYD
+@performance		22148kb 123 ms
+@category 		#큐
+@note
+*/
+
 public class Solution {
 
 	public static void main(String[] args) throws IOException {
