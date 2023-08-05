@@ -10,9 +10,9 @@ import java.util.StringTokenizer;
  * @author 			Ryong
  * @since 			2023. 8. 5.
  * @see  			https://www.acmicpc.net/problem/1043
- * @performance 
- * @category 		#
- * @note 
+ * @performance 		13020kb	104ms
+ * @category 			#그래프이론 #분리집합
+ * @note 			문제 카테고리와 상이한 방법으로 해결한 것 같다. 찾아보니 Union-Find로 해결한 사람이 많았다. 다시 적용해서 풀어봐야겠다.
  */
 
 public class Main {
