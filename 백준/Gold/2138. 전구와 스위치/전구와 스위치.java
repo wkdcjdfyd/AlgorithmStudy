@@ -6,9 +6,9 @@ import java.io.InputStreamReader;
  * @author 			Ryong
  * @since 			2023. 8. 6.
  * @see  			https://www.acmicpc.net/problem/2138
- * @performance 
- * @category 		#
- * @note 			부분집합을 구해 모든 경우를 탐색했지만 시간초과가 발생했다.
+ * @performance 		26928kb	148ms
+ * @category 			#그리디알고리즘
+ * @note 			부분집합을 구해 모든 경우를 탐색했지만 시간초과가 발생했다. 그리디가 어떨 때 가능한지 더 공부해야겠다.
  */
 
 public class Main {
