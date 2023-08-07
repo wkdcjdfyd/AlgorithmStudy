@@ -10,9 +10,10 @@ import java.util.StringTokenizer;
  * @author 			Ryong
  * @since 			2023. 8. 7.
  * @see  			https://www.acmicpc.net/problem/5427
- * @performance 
- * @category 		#
- * @note 
+ * @performance 		123728kb 796ms
+ * @category 			#너비우선탐색
+ * @note 			불과 상근이에 대한 visited 배열을 따로 만들어서 2번 bfs를 하느라 메모리와 시간 모두 많이 소모됐다.
+ * 				한번에 시도하면 메모리와 시간 모두 줄일 수 있을 것 같다.
  */
 
 public class Main {
