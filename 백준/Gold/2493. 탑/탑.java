@@ -9,9 +9,9 @@ import java.util.StringTokenizer;
 @author 			Ryong
 @since 				2023. 8. 7.
 @see				https://www.acmicpc.net/problem/2493
-@performance
-@category 			#
-@note
+@performance			168960kb 684ms
+@category 			#자료구조 #스택
+@note				스택을 써야한다는걸 못떠올려서 헤맸다...
 */
 
 public class Main {
