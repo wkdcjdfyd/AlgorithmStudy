@@ -8,9 +8,9 @@ import java.util.LinkedList;
  * @author 			Ryong
  * @since 			2023. 8. 8.
  * @see  			https://www.acmicpc.net/problem/16954
- * @performance 
- * @category 		#구현
- * @note 
+ * @performance 		11604b	76ms
+ * @category 			#구현
+ * @note 			코드 복붙할 때 변경사항 잘 확인하기...
  */
 
 public class Main {
