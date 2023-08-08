@@ -10,9 +10,9 @@ import java.util.StringTokenizer;
 @author 			Ryong
 @since 				2023. 8. 8.
 @see				https://www.acmicpc.net/problem/12851
-@performance
-@category 			#
-@note
+@performance			25180kb 160ms
+@category 			#너비우선탐색
+@note				BFS의 경우 이전 위치까지 누적된 값을 지속해서 더해줘야 하는데 그 점을 망각해서 오래걸렸다.
 */
 
 public class Main {
@@ -32,53 +32,53 @@ public class Main {
 			return;
 		}
 		
-		int[] dp = new int[(K*2) + 1];
-		Arrays.fill(dp, (int)1e7);
+		int[] arr = new int[(K*2) + 1];
+		Arrays.fill(arr, (int)1e7);
 		int[] cnt = new int[(K*2) + 1];
 		
 		Deque<int[]> q = new LinkedList<>();
 		q.offerLast(new int[] {N, 0});
-		dp[N] = 0;
+		arr[N] = 0;
 		cnt[N] = 1;
 		
 		while(!q.isEmpty()) {
 			int[] now = q.pollFirst();
 			
 			if(now[0]-1 >= 0) {
-				if(dp[now[0]-1] == dp[now[0]] + 1) {
+				if(arr[now[0]-1] == arr[now[0]] + 1) {
 					cnt[now[0]-1] += cnt[now[0]];
 				}
-				else if(dp[now[0]-1] > dp[now[0]] + 1) {
-					dp[now[0]-1] = dp[now[0]] + 1;
+				else if(arr[now[0]-1] > arr[now[0]] + 1) {
+					arr[now[0]-1] = arr[now[0]] + 1;
 					cnt[now[0]-1] = cnt[now[0]];
-					q.offerLast(new int[] {now[0]-1, dp[now[0]] + 1});
+					q.offerLast(new int[] {now[0]-1, arr[now[0]] + 1});
 				}
 			}
 			
 			if(now[0]+1 <= K*2) {
-				if(dp[now[0]+1] == dp[now[0]] + 1) {
+				if(arr[now[0]+1] == arr[now[0]] + 1) {
 					cnt[now[0]+1] += cnt[now[0]];
 				}
-				else if(dp[now[0]+1] > dp[now[0]] + 1) {
-					dp[now[0]+1] = dp[now[0]] + 1;
+				else if(arr[now[0]+1] > arr[now[0]] + 1) {
+					arr[now[0]+1] = arr[now[0]] + 1;
 					cnt[now[0]+1] = cnt[now[0]];
-					q.offerLast(new int[] {now[0]+1, dp[now[0]] + 1});
+					q.offerLast(new int[] {now[0]+1, arr[now[0]] + 1});
 				}
 			}
 			
 			if(now[0]*2 <= K*2) {
-				if(dp[now[0]*2] == dp[now[0]] + 1) {
+				if(arr[now[0]*2] == arr[now[0]] + 1) {
 					cnt[now[0]*2] += cnt[now[0]];
 				}
-				else if(dp[now[0]*2] > dp[now[0]] + 1) {
-					dp[now[0]*2] = dp[now[0]] + 1;
+				else if(arr[now[0]*2] > arr[now[0]] + 1) {
+					arr[now[0]*2] = arr[now[0]] + 1;
 					cnt[now[0]*2] = cnt[now[0]];
-					q.offerLast(new int[] {now[0]*2, dp[now[0]] + 1});
+					q.offerLast(new int[] {now[0]*2, arr[now[0]] + 1});
 				}
 			}
 		}
 		
-		System.out.println(dp[K] + "\n" + cnt[K]);
+		System.out.println(arr[K] + "\n" + cnt[K]);
 		br.close();
 	}
 
