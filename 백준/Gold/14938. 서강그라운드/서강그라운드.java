@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 @author 		Ryong
 @since 			2023. 8. 9.
 @see			https://www.acmicpc.net/problem/14938
-@performance
+@performance		12004kb	96ms
 @category 		#다익스트라
 @note
 */
