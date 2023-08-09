@@ -7,9 +7,9 @@ import java.util.Stack;
 @author 		Ryong
 @since 			2023. 8. 9.
 @see			https://www.acmicpc.net/problem/9935
-@performance
-@category 		#
-@note
+@performance		38864kb	392ms
+@category 		#문자열 #스택
+@note			#String의 replace는 메모리를 많이 잡아먹는다!
 */
 
 public class Main {
