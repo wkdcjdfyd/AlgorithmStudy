@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 @author 		Ryong
 @since 			2023. 8. 9.
 @see			https://www.acmicpc.net/problem/1149
-@performance
+@performance		12112kb	96ms
 @category 		#DP
 @note
 */
