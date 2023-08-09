@@ -6,8 +6,8 @@ import java.util.StringTokenizer;
 /**
 @author 		Ryong
 @since 			2023. 8. 9.
-@see
-@performance
+@see			https://www.acmicpc.net/problem/2563
+@performance		11580kb	80ms
 @category 		#구현
 @note
 */
