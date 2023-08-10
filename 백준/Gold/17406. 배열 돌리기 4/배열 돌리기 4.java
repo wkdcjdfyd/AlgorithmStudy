@@ -7,8 +7,8 @@ import java.util.StringTokenizer;
  * @author 			Ryong
  * @since 			2023. 8. 10.
  * @see  			https://www.acmicpc.net/problem/17406
- * @performance 
- * @category 		#구현 #시뮬레이션
+ * @performance 		12472kb 176ms
+ * @category 			#구현 #시뮬레이션
  * @note 
  */
 
