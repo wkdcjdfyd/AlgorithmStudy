@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 @author 		Ryong
 @since 			2023. 8. 10.
 @see			https://www.acmicpc.net/problem/9663
-@performance
+@performance		12120kb 5848ms
 @category 		#백트래킹
 @note
 */
