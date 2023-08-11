@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 @author 		Ryong
 @since 			2023. 8. 4.
 @see			https://www.acmicpc.net/problem/15686
-@performance		13000kb	176ms
+@performance	
 @category 		#브루트포스 #조합
 @note
 */
