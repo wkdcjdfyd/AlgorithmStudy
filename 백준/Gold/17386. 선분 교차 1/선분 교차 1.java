@@ -7,8 +7,8 @@ import java.util.StringTokenizer;
 @author 		Ryong
 @since 			2023. 8. 11.
 @see			https://www.acmicpc.net/problem/17386
-@performance
-@category 		#
+@performance		11516kb 76ms
+@category 		#기하학 #선분교차판정
 @note			CCW 알고리즘을 처음 알았다.
 */
 
