@@ -51,11 +51,11 @@ public class Main {
 			}
 			// 펼쳐지는 곳은 원본을 뒤집어서 복사
 			for(;j < 2*C; j++) {
-				if(paper[i][j-C] == 3 || paper[i][j-C] == 1) {
-					nxtPaper[i][j] = paper[i][j-C] - 1;
+				if(paper[i][2*C-j-1] == 3 || paper[i][2*C-j-1] == 1) {
+					nxtPaper[i][j] = paper[i][2*C-j-1] - 1;
 				}
 				else {
-					nxtPaper[i][j] = paper[i][j-C] + 1;
+					nxtPaper[i][j] = paper[i][2*C-j-1] + 1;
 				}
 			}
 		}
@@ -74,11 +74,11 @@ public class Main {
 			}
 			// 펼쳐지는 곳은 원본을 뒤집어서 복사
 			for(;i < 2*R; i++) {
-				if(paper[i-R][j] == 0 || paper[i-R][j] == 1) {
-					nxtPaper[i][j] = paper[i-R][j] + 2;
+				if(paper[2*R-i-1][j] == 0 || paper[2*R-i-1][j] == 1) {
+					nxtPaper[i][j] = paper[2*R-i-1][j] + 2;
 				}
 				else {
-					nxtPaper[i][j] = paper[i-R][j] - 2;
+					nxtPaper[i][j] = paper[2*R-i-1][j] - 2;
 				}
 			}
 		}
