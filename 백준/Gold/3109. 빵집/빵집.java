@@ -7,9 +7,9 @@ import java.util.StringTokenizer;
 @author 		Ryong
 @since 			2023. 8. 16.
 @see			https://www.acmicpc.net/problem/3109
-@performance	
+@performance		61864kb 352ms
 @category 		#DFS
-@note			
+@note			visited 배열을 이상한 곳에서 사용했다.
 */
 
 public class Main {
