@@ -2,47 +2,28 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
-/**
-@author 			Ryong
-@since 				2023. 8. 4.
-@see				https://www.acmicpc.net/problem/1753
-@performance
-@category 			#다익스트라
-@note				
-*/
-
 public class Main {
-	static final long MAX = 6_000_000_000L;
-	static ArrayList<ArrayList<Node>> graph = new ArrayList<ArrayList<Node>>();
+	static final int INF = (int)1e9;
+	static int V;
+	static int E;
+	static ArrayList<ArrayList<Node>> graph = new ArrayList<>();	
 	static long[] d;
 	
 	static class Node implements Comparable<Node>{
-		private int idx;
-		private long distance;
+		int num;
+		long dist;
 		
-		public Node(int idx, long distance) {
-			this.idx = idx;
-			this.distance = distance;
-		}
-		
-		public int getIdx() {
-			return this.idx;
-		}
-		
-		public long getDistance() {
-			return this.distance;
+		public Node(int num, long dist) {
+			this.num = num;
+			this.dist = dist;
 		}
 		
 		@Override
-		public int compareTo(Node other) {
-			return (int)(this.distance - other.distance);
+		public int compareTo(Node o) {
+			return Long.compare(this.dist, o.dist);
 		}
 	}
 	
@@ -52,57 +33,56 @@ public class Main {
 		d[start] = 0;
 		
 		while(!pq.isEmpty()) {
-			Node node = pq.poll();
-			long dist = node.getDistance();
-			int now = node.getIdx();
+			Node now = pq.poll();
+			if(d[now.num] < now.dist) continue;
 			
-			if(d[now] < dist) continue;
-			
-			for(int i = 0; i < graph.get(now).size(); i++) {
-				long cost = d[now] + graph.get(now).get(i).getDistance();
-				if(cost < d[graph.get(now).get(i).getIdx()]) {
-					d[graph.get(now).get(i).getIdx()] = cost;
-					pq.offer(new Node(graph.get(now).get(i).getIdx(), cost));
+			for(Node nxt : graph.get(now.num)) {
+				long cost = d[now.num] + nxt.dist;
+				
+				if(cost < d[nxt.num]) {
+					d[nxt.num] = cost;
+					pq.offer(new Node(nxt.num, cost));
 				}
 			}
 		}
 		
 	}
-
+	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int V = Integer.parseInt(st.nextToken());
-		int E = Integer.parseInt(st.nextToken());
-		int K = Integer.parseInt(br.readLine());
-		d = new long[V+1];
+		StringBuilder sb = new StringBuilder();
 		
-		for(int v = 0; v < V+1; v++) {
+		V = Integer.parseInt(st.nextToken());
+		E = Integer.parseInt(st.nextToken());
+		
+		d = new long[V+1];
+		for(int i = 0; i < V+1; i++) {
 			graph.add(new ArrayList<Node>());
-			d[v] = MAX;
+			d[i] = INF;
 		}
 		
-		for(int e = 0; e < E; e++) {
+		int K = Integer.parseInt(br.readLine());
+		
+		for(int i = 0; i < E; i++) {
 			st = new StringTokenizer(br.readLine());
 			int u = Integer.parseInt(st.nextToken());
 			int v = Integer.parseInt(st.nextToken());
 			int w = Integer.parseInt(st.nextToken());
-			
 			graph.get(u).add(new Node(v, w));
 		}
 		
 		dijkstra(K);
 		
-		for(int v = 1; v < V+1; v++) {
-			if(v == K) {
+		for(int i = 1; i < V+1; i++) {
+			if(i == K) {
 				sb.append(0 + "\n");
 			}
-			else if(d[v] == MAX) {
+			else if(d[i] == INF) {
 				sb.append("INF\n");
 			}
 			else {
-				sb.append(d[v] + "\n");
+				sb.append(d[i] + "\n");
 			}
 		}
 		System.out.println(sb.toString());
