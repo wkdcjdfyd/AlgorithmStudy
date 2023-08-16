@@ -8,9 +8,9 @@ import java.util.StringTokenizer;
 @author 		Ryong
 @since 			2023. 8. 16.
 @see			https://www.acmicpc.net/problem/6987
-@performance	
-@category 		#
-@note			
+@performance		11604kb 80ms
+@category 		#백트래킹
+@note			무작정 구현으로 하려고 했더니 고려해야하는게 엄청 많았다. 시간 초과가 안나게 백트래킹으로 가지치기를 하는 것도 고민을 잘 해야겠다.
 */
 
 public class Main {
