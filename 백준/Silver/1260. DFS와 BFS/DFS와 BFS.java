@@ -2,16 +2,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
-import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class Main {
 	static ArrayList<ArrayList<Integer>> graph;
+	static StringBuilder sb;
 	static int[] visited;
 	static int N;
 	static int M;
@@ -40,30 +38,16 @@ public class Main {
 		return sb.toString();
 	}
 	
-	public static String dfs(int start) {
-		StringBuilder sb = new StringBuilder();
-		Stack<Integer> s = new Stack<>();
-		visited = new int[N+1];
-		
-		s.push(start);
-		
-		while(!s.isEmpty()) {
-			int now = s.pop();
+	public static void dfs(int start) {
+		visited[start] = 1;
+		sb.append(start + " ");
 			
-			if(visited[now] == 1) continue;
-			
-			visited[now] = 1;
-			sb.append(now + " ");
-			
-			ArrayList<Integer> temp = graph.get(now);
-			for(int i = temp.size()-1; i >= 0; i--) {
-				int nxt = temp.get(i);
-				if(visited[nxt] != 1) {
-					s.push(nxt);
-				}
+		for(int nxt: graph.get(start)) {
+			if(visited[nxt] != 1) {
+				visited[nxt] = 1;
+				dfs(nxt);
 			}
 		}
-		return sb.toString();
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -73,6 +57,8 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		V = Integer.parseInt(st.nextToken());
+		visited = new int[N+1];
+		sb = new StringBuilder();
 		int[][] edges = new int[M][2];
 		
 		graph = new ArrayList<>();
@@ -94,7 +80,8 @@ public class Main {
 			Collections.sort(temp);
 		}
 		
-		System.out.println(dfs(V));
+		dfs(V);
+		System.out.println(sb.toString());
 		System.out.println(bfs(V));
 	}
 
