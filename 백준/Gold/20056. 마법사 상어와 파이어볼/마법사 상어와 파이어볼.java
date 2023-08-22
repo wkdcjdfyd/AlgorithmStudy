@@ -18,10 +18,9 @@ import java.util.StringTokenizer;
 public class Main {
 	static int N, M, K;
 	static ArrayList<FireBall> fireBall;
-	static int[][] graph;
+	static Deque<FireBall>[][] graph;
 	static int[] dx = {-1, -1, 0, 1, 1, 1, 0, -1};
 	static int[] dy = {0, 1, 1, 1, 0, -1, -1, -1};
-	static Deque<int[]> q = new ArrayDeque<>();
 	
 	static class FireBall {
 		int x;
@@ -69,70 +68,56 @@ public class Main {
 	
 	public static void moveFireBall() {
 		for(FireBall now : fireBall) {
-			graph[now.x][now.y]--;
 			now.move();
-			graph[now.x][now.y]++;
-		}
-	}
-	
-	public static void findDup() {
-		for(int i = 0; i < N; i++) {
-			for(int j = 0; j < N; j++) {
-				if(graph[i][j] >= 2) {
-					q.offer(new int[] {i, j});
-				}
-			}
+			graph[now.x][now.y].offer(now); 
 		}
 	}
 	
 	public static void split() {
-		while(!q.isEmpty()) {
-			int[] loc = q.poll();
-			ArrayList<Integer> dupBall = new ArrayList<>();
-			int mSum = 0;
-			int sSum = 0;
-			boolean allEven = true;
-			boolean allOdd = true;
-			
-			for(int i = 0; i < fireBall.size(); i++) {
-				FireBall temp = fireBall.get(i);
-				if(temp.x == loc[0] && temp.y == loc[1]) {
+		for(int i = 0; i < N; i++) {
+			for(int j = 0; j < N; j++) {
+				if(graph[i][j].size() < 2) {
+					graph[i][j].clear();
+					continue;
+				}
+				int mSum = 0;
+				int sSum = 0;
+				int cnt = graph[i][j].size();
+				boolean allEven = true;
+				boolean allOdd = true;
+				
+				while(!graph[i][j].isEmpty()) {
+					FireBall temp = graph[i][j].poll();
 					mSum += temp.m;
 					sSum += temp.s;
-					dupBall.add(i);
 					if(temp.d % 2 == 0) {
 						allOdd = false;
 					}
 					else {
 						allEven = false;
 					}
+					fireBall.remove(temp);
 				}
-			}
-			
-			int m = (int)(mSum / 5);
-			int s = (int)(sSum / dupBall.size());
-			if(m != 0) {		
+				int m = (int)(mSum / 5);
+				int s = (int)(sSum / cnt);
+				
+				if(m == 0) {
+					continue;
+				}
 				if(allEven || allOdd) {
 					for(int d = 0; d < 8; d = d+2) {
-						fireBall.add(new FireBall(loc[0], loc[1], m, s, d));
+						fireBall.add(new FireBall(i, j, m, s, d));
 					}
 				}
 				else {
 					for(int d = 1; d < 9; d = d+2) {
-						fireBall.add(new FireBall(loc[0], loc[1], m, s, d));
+						fireBall.add(new FireBall(i, j, m, s, d));
 					}
 				}
-				graph[loc[0]][loc[1]] = 4;
-			}
-			else {
-				graph[loc[0]][loc[1]] = 0;
-			}
-			
-			for(int i = dupBall.size()-1; i >= 0; i--) {
-				fireBall.remove((int)(dupBall.get(i)));
 			}
 		}
 	}
+	
 	public static int messSum() {
 		int sum = 0;
 		for(FireBall fb : fireBall) {
@@ -148,7 +133,13 @@ public class Main {
 		M = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
 		
-		graph = new int[N][N];
+		graph = new Deque[N][N];
+		for(int i = 0; i < N; i++) {
+			for(int j = 0; j < N; j++) {
+				graph[i][j] = new ArrayDeque<FireBall>();
+			}
+		}
+		
 		fireBall = new ArrayList<>();
 		
 		for(int i = 0; i < M; i++) {
@@ -158,13 +149,12 @@ public class Main {
 			int m = Integer.parseInt(st.nextToken());
 			int s = Integer.parseInt(st.nextToken());
 			int d = Integer.parseInt(st.nextToken());
+			
 			fireBall.add(new FireBall(x-1, y-1, m, s, d));
-			graph[x-1][y-1]++;
 		}
 		
 		for(int i = 0; i < K; i++) {
 			moveFireBall();
-			findDup();
 			split();
 		}
 		
