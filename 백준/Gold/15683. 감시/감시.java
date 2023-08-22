@@ -8,9 +8,9 @@ import java.util.StringTokenizer;
 @author 		Ryong
 @since 			2023. 8. 22.
 @see			https://www.acmicpc.net/problem/15683
-@performance	
-@category 		#
-@note			
+@performance		42540kb 328ms
+@category 		#구현 #백트래킹 #브루트포스
+@note			재귀를 통해 배열 변경 연산을 최소화 하는 방법을 2048 문제에서 배웠었는데 그걸 활용했다!
 */
 
 public class Main {
