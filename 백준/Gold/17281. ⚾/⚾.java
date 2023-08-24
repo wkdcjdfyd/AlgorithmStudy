@@ -33,25 +33,6 @@ public class Main {
 		}
 	}
 	
-	public static int nextHitterIdx(int idx, int[] order, int[] base) {
-		boolean flag = true;
-		while(true) {
-			idx = (idx+1) % 9;
-			int h = order[idx];
-			
-			flag = true;
-			for(int i = 1; i < 4; i++) {
-				if(h == base[i]) {
-					flag = false;
-					break;
-				}
-			}
-			if(flag) {
-				return idx;
-			}
-		}		
-	}
-	
 	public static int calc(int[] order) {
 		int score = 0;
 		int lastHitterIdx = -1;
@@ -59,7 +40,7 @@ public class Main {
 		Game:
 		for(int inning = 0; inning < N; inning++) {
 			int outCnt = 0;
-			int[] base = new int[4];
+			boolean[] base = new boolean[4];
 			int hitterIdx = (lastHitterIdx+1) % 9;
 			
 			while(true) {
@@ -72,49 +53,49 @@ public class Main {
 						}
 						break;
 					case 1:
-						if(base[3] != 0) {
+						if(base[3]) {
 							score++;
-							base[3] = 0;
+							base[3] = false;
 						}
 						for(int i = 2; i > 0; i--) {
-							if(base[i] != 0) {
+							if(base[i]) {
 								base[i+1] = base[i];
-								base[i] = 0;
+								base[i] = false;
 							}
 						}
-						base[1] = hitter;
+						base[1] = true;
 						break;
 					case 2:
-						if(base[3] != 0) {
+						if(base[3]) {
 							score++;
-							base[3] = 0;
+							base[3] = false;
 						}
-						if(base[2] != 0) {
+						if(base[2]) {
 							score++;
-							base[2] = 0;
+							base[2] = false;
 						}
-						if(base[1] != 0) {
+						if(base[1]) {
 							base[3] = base[1];
-							base[1] = 0;
+							base[1] = false;
 						}
-						base[2] = hitter;
+						base[2] = true;
 						break;
 					case 3:
 						for(int i = 1; i < 4; i++){
-							if(base[i] != 0) score++;
-							base[i] = 0;
+							if(base[i]) score++;
+							base[i] = false;
 						}
-						base[3] = hitter;
+						base[3] = true;
 						break;
 					case 4:
 						for(int i = 1; i < 4; i++){
-							if(base[i] != 0) score++;
-							base[i] = 0;
+							if(base[i]) score++;
+							base[i] = false;
 						}
 						score++;
 						break;
 				}
-				hitterIdx = nextHitterIdx(hitterIdx, order, base);
+				hitterIdx = (hitterIdx+1) % 9;
 			}
 		}
 		return score;
