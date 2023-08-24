@@ -46,19 +46,17 @@ public class Main {
 			parents[i] = i;
 		}
 		
-		int num = 0;
 		for(int i = 1; i < M+1; i++) {
 			st = new StringTokenizer(br.readLine());
 			int x = Integer.parseInt(st.nextToken());
 			int y = Integer.parseInt(st.nextToken());
 			
 			if(!union(x, y)) {
-				if(num == 0) {
-					num = i;
-				}
+				System.out.println(i);
+				return;
 			}
 		}
-		System.out.println(num);
+		System.out.println(0);
 		br.close();
 	}
 
