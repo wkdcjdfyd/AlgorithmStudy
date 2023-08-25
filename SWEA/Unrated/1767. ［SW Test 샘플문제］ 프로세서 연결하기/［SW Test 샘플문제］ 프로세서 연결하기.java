@@ -79,12 +79,11 @@ public class Solution {
 		return cnt;
 	}
 	
-	public static void dfs(int nth, int cnt, int[][] arr) {
+	public static void dfs(int nth, int cnt, int active, int[][] arr) {
+		if(activeCnt > active + core.size() - nth){
+			return;
+		}
 		if(nth == core.size()) {
-			int active = 0;
-			for(int i = 0; i < core.size(); i++) {
-				if(activate[i]) active++;
-			}
 			if(active > activeCnt) {
 				activeCnt = active;
 				min = cnt;
@@ -97,13 +96,13 @@ public class Solution {
 		
 		int[] now = core.get(nth);
 		
-		dfs(nth+1, cnt, arr);
+		dfs(nth+1, cnt, active, arr);
 		
 		int[][] arrUp = copy(arr);
 		int upCnt = up(now[0], now[1], arrUp);
 		if(upCnt != -1) {
 			activate[nth] = true;
-			dfs(nth+1, cnt + upCnt, arrUp);
+			dfs(nth+1, cnt + upCnt, active+1, arrUp);
 			activate[nth] = false;
 		}
 		
@@ -111,7 +110,7 @@ public class Solution {
 		int downCnt = down(now[0], now[1], arrDown);
 		if(downCnt != -1) {
 			activate[nth] = true;
-			dfs(nth+1, cnt + downCnt, arrDown);
+			dfs(nth+1, cnt + downCnt, active+1, arrDown);
 			activate[nth] = false;
 		}
 		
@@ -119,7 +118,7 @@ public class Solution {
 		int leftCnt = left(now[0], now[1], arrLeft);
 		if(leftCnt != -1) {
 			activate[nth] = true;
-			dfs(nth+1, cnt + leftCnt, arrLeft);
+			dfs(nth+1, cnt + leftCnt, active+1, arrLeft);
 			activate[nth] = false;
 		}
 		
@@ -127,7 +126,7 @@ public class Solution {
 		int rightCnt = right(now[0], now[1], arrRight);
 		if(rightCnt != -1) {
 			activate[nth] = true;
-			dfs(nth+1, cnt + rightCnt, arrRight);
+			dfs(nth+1, cnt + rightCnt, active+1, arrRight);
 			activate[nth] = false;
 		}
 	}
@@ -157,7 +156,7 @@ public class Solution {
 				}
 			}
 			activate = new boolean[core.size()];
-			dfs(0, 0, copy(graph));
+			dfs(0, 0, 0, copy(graph));
 			
 			sb.append(String.format("#%d %d\n", t, min));
 		}
