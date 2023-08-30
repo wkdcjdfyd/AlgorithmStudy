@@ -17,32 +17,7 @@ import java.util.StringTokenizer;
 public class Main {
 	static int N, M;
 	static int[][] graph;
-	static int[][] visited;
-	static int[] dx = {1, 0, 1};
-	static int[] dy = {0, 1, 1};
-	
-	public static void bfs() {
-		Deque<int[]> q = new ArrayDeque<>();
-		visited[0][0] = graph[0][0];
-		q.offer(new int[] {0, 0});
-		
-		while(!q.isEmpty()) {
-			int[] now = q.poll();
-			
-			for(int d = 0; d < dx.length; d++) {
-				int nx = now[0] + dx[d];
-				int ny = now[1] + dy[d];
-				
-				if(nx < 0 || ny < 0 || nx >= N || ny >= M) {
-					continue;
-				}
-				if(visited[nx][ny] == -1 || visited[nx][ny] < visited[now[0]][now[1]] + graph[nx][ny]) {
-					visited[nx][ny] = visited[now[0]][now[1]] + graph[nx][ny];
-					q.offer(new int[] {nx, ny});
-				}
-			}
-		}
-	}
+	static int[][] dp;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -51,19 +26,29 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		graph = new int[N][M];
-		visited = new int[N][M];
+		dp = new int[N][M];
 		
 		for(int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
 			for(int j = 0; j < M; j++) {
 				graph[i][j] = Integer.parseInt(st.nextToken());
-				visited[i][j] = -1;
+				dp[i][j] = -1;
 			}
 		}
 		
-		bfs();
+		dp[0][0] = graph[0][0];
+		for(int j = 1; j < M; j++) {
+			dp[0][j] = dp[0][j-1] + graph[0][j];
+		}
 		
-		System.out.println(visited[N-1][M-1]);
+		for(int i = 1; i < N; i++) {
+			dp[i][0] = dp[i-1][0] + graph[i][0];
+			for(int j = 1; j < M; j++) {
+				dp[i][j] = graph[i][j] + Math.max(dp[i-1][j], dp[i][j-1]);
+			}
+		}
+		
+		System.out.println(dp[N-1][M-1]);
 		br.close();
 	}
 
