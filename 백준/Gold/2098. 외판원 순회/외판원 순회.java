@@ -20,22 +20,28 @@ public class Main {
 	static int[][] dp;
 	static int ans = MAX;
 	
-	public static void tsp(int now, int visited) {
+	public static int tsp(int now, int visited) {
 		if(visited == (1 << N) - 1) {
-			if(graph[now][0] == 0) return;
-			ans = Math.min(ans, dp[now][visited] + graph[now][0]);
-			return;
+			if(graph[now][0] == 0) return MAX;
+			return graph[now][0];
 		}
+		if(dp[now][visited] != -1) return dp[now][visited];
+		dp[now][visited] = MAX;
+		
 		for(int i = 0; i < N; i++) {
-			int nxt = (1 << i);
-			int nxtVisited = (visited | nxt);
+			if(graph[now][i] == 0) continue;
+
+			int nxtVisited = (visited | (1 << i));
 			if(nxtVisited == visited) continue;
 			if(graph[now][i] == 0) continue;
-			if(dp[now][visited] + graph[now][i] < dp[i][nxtVisited]) {
-				dp[i][nxtVisited] = dp[now][visited] + graph[now][i];
-				tsp(i, nxtVisited);
+			
+			int temp = tsp(i, nxtVisited) + graph[now][i];
+			
+			if(dp[now][visited] > temp) {
+				dp[now][visited] = temp;
 			}
 		}
+		return dp[now][visited];
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -48,16 +54,13 @@ public class Main {
 		
 		for(int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
-			Arrays.fill(dp[i], MAX);
+			Arrays.fill(dp[i], -1);
 			for(int j = 0; j < N; j++) {
 				graph[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
 		
-		dp[0][1] = 0;
-		tsp(0, 1);
-		
-		System.out.println(ans);
+		System.out.println(tsp(0, 1));
 		br.close();
 	}
 
