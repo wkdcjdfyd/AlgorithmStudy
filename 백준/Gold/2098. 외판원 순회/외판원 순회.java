@@ -18,7 +18,6 @@ public class Main {
 	static int N;
 	static int[][] graph;
 	static int[][] dp;
-	static int ans = MAX;
 	
 	public static int tsp(int now, int visited) {
 		if(visited == (1 << N) - 1) {
@@ -33,10 +32,8 @@ public class Main {
 
 			int nxtVisited = (visited | (1 << i));
 			if(nxtVisited == visited) continue;
-			if(graph[now][i] == 0) continue;
 			
 			int temp = tsp(i, nxtVisited) + graph[now][i];
-			
 			if(dp[now][visited] > temp) {
 				dp[now][visited] = temp;
 			}
