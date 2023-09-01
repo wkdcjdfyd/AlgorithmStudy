@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 
 /**
 @author 		Ryong
@@ -16,54 +16,88 @@ import java.util.HashSet;
 public class Main {
 	static int N;
 	static char[][] graph;
-	static ArrayList<ArrayList<Integer>> nums = new ArrayList<>();
+	static ArrayList<ArrayList<Integer>> candi = new ArrayList<>();
 	static double sum;
 	static int allCnt;
-	static final int[][] NUM = {{0, 1, 2, 3, 5, 6, 8, 9, 11, 12, 13, 14},
-								{2, 5, 8, 11, 14},
-								{0, 1, 2, 5, 6, 7, 8, 9, 12, 13, 14},
-								{0, 1, 2, 5, 6, 7, 8, 11, 12, 13, 14},
-								{0, 2, 3, 5, 6, 7, 8, 11, 14},
-								{0, 1, 2, 3, 6, 7, 8, 11, 12, 13, 14},
-								{0, 1, 2, 3, 6, 7, 8, 9, 11, 12, 13, 14},
-								{0, 1, 2, 5, 8, 11, 14},
-								{0, 1, 2, 3, 5, 6, 7, 8, 9, 11, 12, 13, 14},
-								{0, 1, 2, 3, 5, 6, 7, 8, 11, 12, 13, 14}};
-	static HashSet<Integer>[] set = new HashSet[10];
-
-	private static void getPossible(int nth) {
-		int n = 0;
+	
+	public static void getPossible(int nth) {
+		boolean[] possible = new boolean[10];
+		Arrays.fill(possible, true);
+		
 		int y = 4 * nth;
-		HashSet<Integer> temp = new HashSet<>();
 		
-		for(int i = 0; i < 5; i++) {
-			for(int j = y; j < y+3; j++) {
-				if(graph[i][j] == '#') temp.add(n);
-				n++;
-			}
+		if(graph[1][y+1] == '#') {
+			return;
+		}
+		if(graph[3][y+1] == '#') {
+			return;
 		}
 		
-		for(int i = 0; i < 10; i++) {
-			if(set[i].containsAll(temp)) {
-				nums.get(nth).add(i);
-			}
+		if(graph[0][y] == '#') {
+			possible[1] = false;
 		}
-		
+		if(graph[0][y+1] == '#') {
+			possible[1] = false;
+			possible[4] = false;
+		}
+		if(graph[1][y] == '#') {
+			possible[1] = false;
+			possible[2] = false;
+			possible[3] = false;
+			possible[7] = false;
+		}
+		if(graph[1][y+2] == '#') {
+			possible[5] = false;
+			possible[6] = false;
+		}
+		if(graph[2][y] == '#') {
+			possible[1] = false;
+			possible[7] = false;
+		}
+		if(graph[2][y+1] == '#') {
+			possible[0] = false;
+			possible[1] = false;
+			possible[7] = false;
+		}
+		if(graph[3][y] == '#') {
+			possible[1] = false;
+			possible[3] = false;
+			possible[4] = false;
+			possible[5] = false;
+			possible[7] = false;
+			possible[9] = false;
+		}
+		if(graph[3][y+2] == '#') {
+			possible[2] = false;
+		}
+		if(graph[4][y] == '#') {
+			possible[1] = false;
+			possible[4] = false;
+			possible[7] = false;
+		}
+		if(graph[4][y+1] == '#') {
+			possible[1] = false;
+			possible[4] = false;
+			possible[7] = false;
+		}
+		for(int i = 0; i < possible.length; i++) {
+			if(possible[i]) candi.get(nth).add(i);
+		}
 	}
 	
 	public static void getSum() {
 		for(int nth = 0; nth < N; nth++) {
-			if(nums.get(nth).size() == 0) continue;
+			if(candi.get(nth).size() == 0) continue;
 			
 			double dec = (int)Math.pow(10, N - 1 - nth);
 			double cnt = 1;
 			for(int i = 0; i < N; i++) {
 				if(i == nth) continue;
-				cnt *= nums.get(i).size();
+				cnt *= candi.get(i).size();
 			}
 			
 			int s = 0;
-			for(int n : nums.get(nth)) {
+			for(int n : candi.get(nth)) {
 				s += n;
 			}
 			sum += s * dec * cnt;
@@ -79,19 +113,13 @@ public class Main {
 			graph[i] = br.readLine().toCharArray();
 		}
 		for(int i = 0; i < N; i++) {
-			nums.add(new ArrayList<>());
-		}
-		for(int i = 0; i < 10; i++) {
-			set[i] = new HashSet<>();
-			for(int j = 0; j < NUM[i].length; j++) {
-				set[i].add(NUM[i][j]);
-			}
+			candi.add(new ArrayList<>());
 		}
 		
 		allCnt = 1;
 		for(int i = 0; i < N; i++) {
 			getPossible(i);
-			allCnt *= nums.get(i).size();
+			allCnt *= candi.get(i).size();
 		}
 		if(allCnt == 0) {
 			System.out.println(-1);
@@ -101,8 +129,8 @@ public class Main {
 		
 		sum = 0;
 		getSum();
-
-		System.out.printf("%.5f", sum / allCnt);
+		
+		System.out.printf("%.5f", 1.0 * sum / allCnt);
 		br.close();
 	}
 
