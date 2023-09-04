@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
  * @since 			2023. 9. 4.
  * @see  			https://www.acmicpc.net/problem/2140
  * @performance 	
- * @category 		#그리디
+ * @category 		#greedy
  * @note 			
  */
 
@@ -60,12 +60,15 @@ public class Main {
 				}
 			}
 		}
-		for(int i = 0; i < N; i++) {
+		
+		for(int j = 0; j < N; j++) {
+			checkPoint(0, j, graph[0][j]);
+		}
+		for(int i = 1; i < N-1; i++) {
 			checkPoint(i, 0, graph[i][0]);
 			checkPoint(i, N-1, graph[i][N-1]);
 		}
-		for(int j = 1; j < N-1; j++) {
-			checkPoint(0, j, graph[0][j]);
+		for(int j = 0; j < N; j++) {
 			checkPoint(N-1, j, graph[N-1][j]);
 		}
 		
