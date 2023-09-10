@@ -19,39 +19,23 @@ public class Main {
 	static int ansY = -1;
 	static int abs = Integer.MAX_VALUE;
 	
-	public static int search(int target) {
+	public static void search() {
 		int s = 0;
 		int e = N-1;
 		
 		while(s < e) {
-			int mid = (s+e) / 2;
+			int sum = val[s] + val[e];
 			
-			if(target <= val[mid]) {
-				e = mid;
+			if(Math.abs(sum) < abs) {
+				abs = Math.abs(sum);
+				ansX = val[s];
+				ansY = val[e];
 			}
-			else {
-				s = mid + 1;
-			}
+			
+			if(sum >= 0) e--;
+			else s++;
 		}
-		
-		return s;
-	}
-	
-	public static void compareAns(int i, int j) {
-		if(i < 0 || j < 0 || i >= N || j >= N) {
-			return;
-		}
-		if(i == j) {
-			return;
-		}
-		int num = Math.abs(val[i] + val[j]);
-		
-		if(num < abs) {
-			ansX = val[i];
-			ansY = val[j];
-			abs = num;
-		}
-	}
+	}	
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -64,46 +48,9 @@ public class Main {
 			val[i] = Integer.parseInt(st.nextToken());
 		}
 		
-		for(int i = 0; i < N; i++) {
-			int idx = search(-val[i]);
-			
-			if(idx == i) {
-				if(idx - 1 >= 0) {
-					compareAns(i, idx-1);
-				}
-				if(idx + 1 < N) {
-					compareAns(i, idx+1);
-				}
-			}
-			else if(0 < idx && idx < N) {
-				compareAns(i, idx);
-				if(idx - 1 == i && idx - 2 >= 0) {
-					compareAns(i, idx-2);
-				}
-				else {
-					compareAns(i, idx-1);
-				}
-			}
-			else if(idx == 0) {
-				compareAns(i, idx);
-			}
-			else if(idx == N) {
-				if(idx - 1 == i && idx - 2 >= 0) {
-					compareAns(i, idx-2);
-				}
-				else {
-					compareAns(i, idx-1);
-				}
-			}
-		}
+		search();
 		
-		if(ansX <= ansY){
-			System.out.println(ansX + " " + ansY);
-		}
-		else{
-			System.out.println(ansY + " " + ansX);
-		}
-		
+		System.out.println(ansX + " " + ansY);
 		br.close();
 	}
 
