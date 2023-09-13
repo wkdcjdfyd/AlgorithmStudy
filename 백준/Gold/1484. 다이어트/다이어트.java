@@ -26,7 +26,7 @@ public class Main {
 				int y = G / i;
 				if(y == i) continue;
 				
-				if((x+y) % 2 == 0 && (x-y) % 2 == 0) {
+				if((x+y) % 2 == 0) {
 					sb.append((x+y) / 2 + "\n");
 					flag = true;
 				}
