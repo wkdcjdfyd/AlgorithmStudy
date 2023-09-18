@@ -20,7 +20,7 @@ public class Main {
 		
 		long root = pow(x, y/2);
 		
-		if(y % 2 == 1) return (root * root % C) * x % C;
+		if(y % 2 == 1) return ((root * root % C) * (x % C)) % C;
 		return root * root % C;
 	}
 
