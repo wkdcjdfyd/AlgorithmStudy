@@ -6,10 +6,10 @@ import java.util.Deque;
 import java.util.StringTokenizer;
 
 /**
- * @author 		Ryong
- * @since 		2023. 8. 10.
- * @see  		https://www.acmicpc.net/problem/3055
- * @performance 	11768kb 84ms
+ * @author 			Ryong
+ * @since 			2023. 8. 10.
+ * @see  			https://www.acmicpc.net/problem/3055
+ * @performance 
  * @category 		#BFS
  * @note 
  */
