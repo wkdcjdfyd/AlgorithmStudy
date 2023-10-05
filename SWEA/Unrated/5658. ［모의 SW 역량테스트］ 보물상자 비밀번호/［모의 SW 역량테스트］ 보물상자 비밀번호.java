@@ -16,7 +16,7 @@ import java.util.TreeSet;
 public class Solution {
 	static int N, K;
 	static char[] cover;
-	static TreeSet<Long> pwd;
+	static TreeSet<Integer> pwd;
 	
 	public static void makePwd() {
 		int pwdLen = N / 4;
@@ -32,7 +32,7 @@ public class Solution {
 				cnt++;
 				if(++nowIdx == N) nowIdx = 0;
 				if(now.length() == pwdLen) {
-					long num = Long.parseLong(now.toString(), 16);
+					int num = Integer.parseInt(now.toString(), 16);
 					pwd.add(-num);
 					now = new StringBuilder();
 				}
@@ -54,9 +54,9 @@ public class Solution {
 			pwd = new TreeSet<>();
 			
 			makePwd();
-			long ans = 0;
+			int ans = 0;
 			int nth = 0;
-			for(long num : pwd) {
+			for(int num : pwd) {
 				if(nth++ == K-1) {
 					ans = -num;
 					break;
