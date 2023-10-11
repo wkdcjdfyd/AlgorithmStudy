@@ -36,8 +36,7 @@ public class Main {
             boss[i][0] = Long.parseLong(st.nextToken());
             boss[i][1] = Long.parseLong(st.nextToken());
         }
-        Arrays.sort(boss, Comparator.comparingLong(o -> o[0]));
-
+        
         long[][] dp = new long[K+1][MAXTIME + 1];
 
         ArrayList<Long> money = new ArrayList<>();
