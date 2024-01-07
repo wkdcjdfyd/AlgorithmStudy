@@ -3,32 +3,32 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-/**
-@author         Ryong
-@since          2024-01-07
-@see            https://www.acmicpc.net/problem/16947
-@performance
-@category       #그래프탐색
-@note
-*/
-
 public class Main {
 
     static int N;
     static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
     static boolean[] isCycle;
 
-    public static boolean check(int prev, int now, int start){
-        isCycle[now] = true;
-
-        for(int nxt : graph.get(now)){
-            if(!isCycle[nxt]){
-                if(check(now, nxt, start)) return true;
+    public static void check(int now, List<Integer> visited){
+        if(visited.contains(now)){
+            boolean start = false;
+            for(Integer n: visited){
+                if(n == now) start = true;
+                if(start) isCycle[n] = true;
             }
-            if(nxt != prev && nxt == start) return true;
+            return;
         }
-        isCycle[now] = false;
-        return false;
+
+        int prev = 0;
+        if(!visited.isEmpty()){
+            prev = visited.get(visited.size() - 1);
+        }
+        visited.add(now);
+
+        for(Integer nxt : graph.get(now)){
+            if(nxt == prev) continue;
+            check(nxt, new ArrayList<>(visited));
+        }
     }
 
     public static int bfs(int start){
@@ -45,18 +45,18 @@ public class Main {
             for(int nxt : graph.get(now[0])){
                 if(visited[nxt]) continue;
                 if(isCycle[nxt]) return now[1] + 1;
-                
                 visited[nxt] = true;
                 q.offer(new int[]{nxt, now[1] + 1});
             }
         }
 
-        return 0;
+        return 10000;
     }
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
+        isCycle = new boolean[N+1];
 
         for(int i = 0; i < N+1; i++){
             graph.add(new ArrayList<>());
@@ -70,11 +70,7 @@ public class Main {
             graph.get(b).add(a);
         }
 
-        isCycle = new boolean[N+1];
-        for(int i = 1; i < N+1; i++){
-            if(check(i, i, i)) break;
-            Arrays.fill(isCycle, false);
-        }
+        check(1, new ArrayList<>());
 
         StringBuilder sb = new StringBuilder();
         for(int i = 1; i < N+1; i++){
