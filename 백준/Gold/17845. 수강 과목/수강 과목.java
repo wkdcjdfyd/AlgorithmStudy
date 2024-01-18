@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.StringTokenizer;
 
 /**
@@ -22,21 +23,13 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
         int[] dp = new int[N+1];
-        int[][] subjects = new int[K][2];
 
         for(int i = 0; i < K; i++){
             st = new StringTokenizer(br.readLine());
-            subjects[i][0] = Integer.parseInt(st.nextToken());
-            subjects[i][1] = Integer.parseInt(st.nextToken());
-        }
-        Arrays.sort(subjects, (o1, o2) -> Integer.compare(o1[1], o2[1]));
+            int imp = Integer.parseInt(st.nextToken());
+            int time = Integer.parseInt(st.nextToken());
 
-        loop:
-        for(int i = 0; i < K; i++){
-            int imp = subjects[i][0];
-            int time = subjects[i][1];
-            for(int j = N; j > 0; j--){
-                if(j-time < 0) continue loop;
+            for(int j = N; j >= time; j--){
                 dp[j] = Math.max(dp[j-time] + imp, dp[j]);
             }
         }
