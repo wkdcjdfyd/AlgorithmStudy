@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 @since          2024-02-27
 @see            https://www.acmicpc.net/problem/18430
 @performance
-@category       #구현
+@category       #백트래킹
 @note
 */
 
@@ -22,52 +22,37 @@ public class Main {
     static int ans;
 
     public static void dfs(int x, int y, int power){
-        int nx = x;
-        int ny = y;
+        if(y == M){
+            x++;
+            y = 0;
+        }
 
-        while(visited[nx][ny]){
-            ny++;
-            if(ny == M){
-                nx++;
-                ny = 0;
-                if(nx == N){
-                    ans = Math.max(ans, power);
-                    return;
-                }
+        if(x == N){
+            ans = Math.max(ans, power);
+            return;
+        }
+
+        if(!visited[x][y]) {
+            for (int type = 0; type < dx.length; type++) {
+                int nx1 = x + dx[type][0];
+                int ny1 = y + dy[type][0];
+                if (!isValid(nx1, ny1) || visited[nx1][ny1]) continue;
+
+                int nx2 = x + dx[type][1];
+                int ny2 = y + dy[type][1];
+                if (!isValid(nx2, ny2) || visited[nx2][ny2]) continue;
+
+                visited[x][y] = true;
+                visited[nx1][ny1] = true;
+                visited[nx2][ny2] = true;
+                dfs(x, y + 1, power + graph[nx1][ny1] + graph[nx2][ny2] + (graph[x][y] * 2));
+                visited[x][y] = false;
+                visited[nx1][ny1] = false;
+                visited[nx2][ny2] = false;
             }
         }
 
-        for(int type = 0; type < dx.length; type++){
-            int nx1 = nx + dx[type][0];
-            int ny1 = ny + dy[type][0];
-            if(!isValid(nx1, ny1) || visited[nx1][ny1]) continue;
-
-            int nx2 = nx + dx[type][1];
-            int ny2 = ny + dy[type][1];
-            if(!isValid(nx2, ny2) || visited[nx2][ny2]) continue;
-
-            visited[nx][ny] = true;
-            visited[nx1][ny1] = true;
-            visited[nx2][ny2] = true;
-            dfs(nx, ny, power + graph[nx1][ny1] + graph[nx2][ny2] + (graph[nx][ny] * 2));
-            visited[nx][ny] = false;
-            visited[nx1][ny1] = false;
-            visited[nx2][ny2] = false;
-        }
-
-        if(nx == x && ny == y){
-            ny++;
-            if(ny == M){
-                nx++;
-                ny = 0;
-                if(nx == N){
-                    ans = Math.max(ans, power);
-                    return;
-                }
-            }
-        }
-
-        dfs(nx, ny, power);
+        dfs(x, y+1, power);
     }
 
     public static boolean isValid(int x, int y){
